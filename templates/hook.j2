@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+umask 027
+
+# Returns the full path of a certificate.
+# $1 is the name of the certificate
+# $2 is the type (e.g. fullchain, privkey, ...)
+certPath() {
+	echo "/etc/letsencrypt/live/${1}/${2}.pem"
+}
+
+# Checks whether a certificate needs to be updated.
+# $1 is the name of the certificate to check
+# $2 is the path of the certificate
+needsUpdate() {
+	local oldHash
+	local newHash
+
+	[ -f "${2}" ] || return 0
+	oldHash="$(sha512sum "${2}" | cut -d' ' -f1)"
+	newHash="$(sha512sum "$(certPath "${1}" fullchain)" | cut -d' ' -f1)"
+	! [ "${oldHash}" = "${newHash}" ]
+}
+
+{% for name,content in acme_client_hooks.items() %}
+echo 'Executing hook {{ name }}'
+(
+{{ content }}
+)
+{% endfor %}

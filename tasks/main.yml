@@ -1,0 +1,64 @@
+---
+- name: Install certbot
+  apt:
+    name: certbot
+
+- name: Create cli.ini
+  template:
+    src: cli.ini.j2
+    dest: /etc/letsencrypt/cli.ini
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - /etc/letsencrypt/scripts
+    - /etc/letsencrypt/renewal/disabled
+
+- name: Template manual scripts
+  template:
+    src: script.j2
+    dest: "/etc/letsencrypt/scripts/{{ item }}"
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - auth
+    - cleanup
+
+- name: Template hook
+  template:
+    src: hook.j2
+    dest: /etc/letsencrypt/scripts/hook
+    owner: root
+    group: root
+    mode: 0755
+  register: hook
+
+- name: Request certificates
+  command:
+    cmd: certbot certonly --cert-name "{{ item.key }}" -d "{{ item.value | join(',') }}"
+    creates: "/etc/letsencrypt/live/{{ item.key }}"
+  loop: "{{ acme_client_certs | dict2items }}"
+
+- name: Execute hook
+  command: /etc/letsencrypt/scripts/hook
+  when: hook.changed
+
+- name: Find renew configs
+  find:
+    paths: /etc/letsencrypt/renewal
+    depth: 1
+    patterns: "*.conf"
+  register: renews
+
+- name: Move unknown renew configs away
+  command: "mv {{ item }} /etc/letsencrypt/renewal/disabled/{{ item | basename }}"
+  loop: "{{ renews.files | map(attribute='path') | list | difference(acme_client_certs.keys() | map('regex_replace', '^(.*)$', '/etc/letsencrypt/renewal/\\1.conf') | list) }}"

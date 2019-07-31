@@ -1,0 +1,22 @@
+galaxy_info:
+  author: Janne Heß
+  description: Request ACME certificates via a remote DNS server
+  company: stuvus (https://stuvus.uni-stuttgart.de)
+
+  license: CC-BY-SA
+
+  min_ansible_version: 2.7
+
+  platforms:
+    - name: Debian
+      versions:
+        - stretch
+
+  galaxy_tags:
+    - acme
+    - certbot
+    - letsencrypt
+    - certificates
+    - dns
+
+dependencies: []

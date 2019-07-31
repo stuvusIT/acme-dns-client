@@ -1,0 +1,5 @@
+---
+acme_client_rsa_size: 2048
+acme_client_staging: false
+acme_client_certs: {}
+acme_client_hooks: {}

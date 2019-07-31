@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# {{ ansible_managed }}
+
+set -u
+
+exec curl \
+	-sS \
+	--key "{{ acme_client_key }}" \
+	--cert "{{ acme_client_cert }}" \
+	--cacert "{{ acme_client_ca }}" \
+	-X '{% if item == "auth" %}POST{% else %}DELETE{% endif %}' \
+	-H 'Content-Type: text/plain' \
+	--data "${CERTBOT_DOMAIN}{% if item == 'auth' %} ${CERTBOT_VALIDATION}{% endif %}" \
+	"https://{{ acme_client_server }}"
