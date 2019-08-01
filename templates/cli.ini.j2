@@ -1,0 +1,29 @@
+# {{ ansible_managed }}
+# vi: ft=dosini
+
+# Generic stuff
+agree-tos
+manual-public-ip-logging-ok
+non-interactive
+max-log-backups = 0
+email = {{ acme_client_email }}
+no-eff-email
+
+# Paths
+work-dir = /tmp
+no-directory-hooks
+server = {% if acme_client_staging %}https://acme-staging-v02.api.letsencrypt.org/directory{% else %}https://acme-v02.api.letsencrypt.org/directory{% endif %}
+
+# Certificate details
+rsa-key-size = {{ acme_client_rsa_size }}
+keep-until-expiring
+renew-with-new-domains
+
+# Challenge
+manual
+preferred-challenges = dns
+
+# Hooks
+manual-auth-hook = /etc/letsencrypt/scripts/auth
+manual-cleanup-hook = /etc/letsencrypt/scripts/cleanup
+post-hook = /etc/letsencrypt/scripts/hook
