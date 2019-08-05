@@ -3,14 +3,6 @@
   apt:
     name: certbot
 
-- name: Create cli.ini
-  template:
-    src: cli.ini.j2
-    dest: /etc/letsencrypt/cli.ini
-    owner: root
-    group: root
-    mode: 0644
-
 - name: Create directories
   file:
     path: "{{ item }}"
@@ -19,8 +11,18 @@
     group: root
     mode: 0755
   loop:
+    - /etc/letsencrypt
     - /etc/letsencrypt/scripts
+    - /etc/letsencrypt/renewal
     - /etc/letsencrypt/renewal/disabled
+
+- name: Create cli.ini
+  template:
+    src: cli.ini.j2
+    dest: /etc/letsencrypt/cli.ini
+    owner: root
+    group: root
+    mode: 0644
 
 - name: Template manual scripts
   template:
