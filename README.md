@@ -21,8 +21,8 @@ Debian
 | `acme_client_cert`     | :heavy_check_mark:  | The public TLS key for the connection to the server         |
 | `acme_client_ca`       | :heavy_check_mark:  | The CA of the HTTP server running on the DNS server         |
 | `acme_client_server`   | :heavy_check_mark:  | The actual DNS server (`https://` is prefixed automatically |
-| `acme_certs`           | `{}`                | Name-SANs mapping of certificates                           |
-| `acme_hooks`           | `{}`                | Hooks to execute after request/renewal                      |
+| `acme_client_certs`    | `{}`                | Name-SANs mapping of certificates                           |
+| `acme_client_hooks`    | `{}`                | Hooks to execute after request/renewal                      |
 
 ### Certificates
 
