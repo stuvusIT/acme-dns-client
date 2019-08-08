@@ -67,11 +67,11 @@ The function is implemented, so the certificates can be located at another locat
       acme_client_key: /etc/ssl/private.key
       acme_client_cert: /etc/ssl/public.crt
       acme_client_ca: /etc/ssl/certificates/ca-certificates.crt
-      acme_certs:
+      acme_client_certs:
         imap:
           - imap.example.com
           - *.imap.example.com
-      acme_hooks:
+      acme_client_hooks:
         dovecot: |
             if needsUpdate imap /etc/dovecot/fullchain.pem; then
               cp "$(certPath imap fullchain)" /etc/dovecot/fullchain.pem
