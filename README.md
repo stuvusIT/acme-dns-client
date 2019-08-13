@@ -12,17 +12,18 @@ Debian
 
 ## Role Variables
 
-| Name                   | Default / Mandatory | Description                                                 |
-|:-----------------------|:-------------------:|:------------------------------------------------------------|
-| `acme_client_email`    | :heavy_check_mark:  | The email to register the Letsencrypt account with          |
-| `acme_client_rsa_size` | `2048`              | Size of the generated RSA key                               |
-| `acme_client_staging`  | `false`             | Whether to use the Letsencrypt staging server               |
-| `acme_client_key`      | :heavy_check_mark:  | The private TLS key for the connection to the server        |
-| `acme_client_cert`     | :heavy_check_mark:  | The public TLS key for the connection to the server         |
-| `acme_client_ca`       | :heavy_check_mark:  | The CA of the HTTP server running on the DNS server         |
-| `acme_client_server`   | :heavy_check_mark:  | The actual DNS server (`https://` is prefixed automatically |
-| `acme_client_certs`    | `{}`                | Name-SANs mapping of certificates                           |
-| `acme_client_hooks`    | `{}`                | Hooks to execute after request/renewal                      |
+| Name                                | Default / Mandatory | Description                                                 |
+|:------------------------------------|:-------------------:|:------------------------------------------------------------|
+| `acme_client_email`                 | :heavy_check_mark:  | The email to register the Letsencrypt account with          |
+| `acme_client_rsa_size`              | `2048`              | Size of the generated RSA key                               |
+| `acme_client_staging`               | `false`             | Whether to use the Letsencrypt staging server               |
+| `acme_client_key`                   | :heavy_check_mark:  | The private TLS key for the connection to the server        |
+| `acme_client_cert`                  | :heavy_check_mark:  | The public TLS key for the connection to the server         |
+| `acme_client_ca`                    | :heavy_check_mark:  | The CA of the HTTP server running on the DNS server         |
+| `acme_client_server`                | :heavy_check_mark:  | The actual DNS server (`https://` is prefixed automatically |
+| `acme_client_certs`                 | `{}`                | Name-SANs mapping of certificates                           |
+| `acme_client_hooks`                 | `{}`                | Hooks to execute after request/renewal                      |
+| `acme_client_remove_unknown_renews` | `true`              | Whether to remove unknown renew configurations              |
 
 ### Certificates
 
