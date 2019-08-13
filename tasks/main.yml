@@ -60,7 +60,9 @@
     depth: 1
     patterns: "*.conf"
   register: renews
+  when: acme_client_remove_unknown_renews
 
 - name: Move unknown renew configs away
   command: "mv {{ item }} /etc/letsencrypt/renewal/disabled/{{ item | basename }}"
   loop: "{{ renews.files | map(attribute='path') | list | difference(acme_client_certs.keys() | map('regex_replace', '^(.*)$', '/etc/letsencrypt/renewal/\\1.conf') | list) }}"
+  when: acme_client_remove_unknown_renews
